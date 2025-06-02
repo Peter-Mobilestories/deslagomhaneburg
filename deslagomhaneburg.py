@@ -72,8 +72,12 @@ vak = st.text_input("📍 Veld").upper().strip()
 nu = time.time()
 if st.session_state.wacht_tot > nu:
     resterend = int(st.session_state.wacht_tot - nu)
-    st.warning(f"⏳ Je moet nog {resterend} seconden wachten voordat je verder mag.")
-    st.stop()
+    mins, secs = divmod(resterend, 60)
+    klok = f"{mins:02d}:{secs:02d}"
+    st.warning(f"⏳ Je zit in een hinderlaag! Wachten tot je weer mag aanvallen: {klok}")
+    time.sleep(1)
+    st.experimental_rerun()
+
 
 if vak:
     if vak in st.session_state.gevonden_vakken:
