@@ -41,7 +41,7 @@ vraag_data = {
     "B5": {"type": "consequentie", "tekst": "Je loopt in een hinderlaag van de tegenpartij.", "wacht": 120},
     "B6": {"type": "opdracht", "tekst": "Voer een middeleeuwse ridderceremonie uit en sla iemand tot ridder met een tak.", "codewoord": "hekserij"},
     "C1": {"type": "vraag", "tekst": "Wat is een banier?\nA) Een paard\nB) Een strijdkreet\nC) Een vlag met een symbool van een ridder of familie", "antwoord": "C"},
-    "C2": {"type": "opdracht", "tekst": "Vertel in 20 seconden het verhaal van je eerste drakengevecht.", "codewoord": ""},
+    "C2": {"type": "opdracht", "tekst": "Vertel in 20 seconden het verhaal van je eerste drakengevecht.", "codewoord": "wijn"},
     "C3": {"type": "consequentie", "tekst": "De rivier is te diep – je loopt 2 minuten vertraging op.", "wacht": 120},
     "C4": {"type": "opdracht", "tekst": "Voer een zwaardgevecht met dropveters in slow motion.", "codewoord": "slot"},
     "C5": {"type": "consequentie", "tekst": "Je leger verdwaalt in het moeras – je mag 3 minuten geen nieuwe locatie aanvallen.", "wacht": 180},
