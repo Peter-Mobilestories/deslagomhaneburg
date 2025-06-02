@@ -71,14 +71,16 @@ vraag_data = {
 st.title("🏰 De Slag om Slot Haneburg")
 vak = st.text_input("📍 Veld").upper().strip()
 
+st.title("🏰 De Slag om Slot Haneburg")
+vak = st.text_input("📍 Veld").upper().strip()
+
 nu = time.time()
 if st.session_state.wacht_tot > nu:
     resterend = int(st.session_state.wacht_tot - nu)
     mins, secs = divmod(resterend, 60)
     klok = f"{mins:02d}:{secs:02d}"
-    st.warning(f"⏳ Je zit in een hinderlaag! Je mag pas verder over: **{klok}**")
-    st.experimental_rerun()
-
+    st.warning(f"⏳ Je mag pas weer opnieuw aanvallen over over: **{klok}**")
+    st.rerun()
 
 
 if vak:
