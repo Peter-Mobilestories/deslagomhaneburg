@@ -66,14 +66,18 @@ vraag_data = {
 }
 
 # ⏳ Aftellende wachttimer bovenaan
+# Zet de klok bovenaan, vóór alles
 nu = time.time()
 if st.session_state.wacht_tot > nu:
     resterend = int(st.session_state.wacht_tot - nu)
     mins, secs = divmod(resterend, 60)
     klok = f"{mins:02d}:{secs:02d}"
-    st.warning(f"⏳ Je zit in een hinderlaag! Wachten tot je weer mag aanvallen: {klok}")
+    st.title("🏰 De Slag om Slot Haneburg")
+    st.warning(f"⏳ Je zit in een hinderlaag! Je mag pas verder over: **{klok}**")
     time.sleep(1)
     st.experimental_rerun()
+    st.stop()
+
 
 st.title("🏰 De Slag om Slot Haneburg")
 st.markdown("Voer een veld in (bijv. A1-F6):")
