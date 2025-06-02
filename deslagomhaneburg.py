@@ -3,6 +3,7 @@ import time
 
 st.set_page_config(page_title="De Slag om Slot Haneburg", page_icon="🏰")
 
+# Session state initialiseren
 if 'gevonden_vakken' not in st.session_state:
     st.session_state.gevonden_vakken = []
 if 'gevonden_troepen' not in st.session_state:
@@ -65,23 +66,21 @@ vraag_data = {
     "F6": {"type": "consequentie", "tekst": "De brug is ingestort! Wacht 1 minuut.", "wacht": 60},
 }
 
-# ⏳ Aftellende wachttimer bovenaan
-# Zet de klok bovenaan, vóór alles
-# Zet de klok bovenaan en voorkom crash bij rerun
+# Titel en wachttimer
 st.title("🏰 De Slag om Slot Haneburg")
-vak = st.text_input("📍 Veld").upper().strip()
 
-st.title("🏰 De Slag om Slot Haneburg")
-vak = st.text_input("📍 Veld").upper().strip()
-
+# Wachttijd check
 nu = time.time()
 if st.session_state.wacht_tot > nu:
     resterend = int(st.session_state.wacht_tot - nu)
     mins, secs = divmod(resterend, 60)
     klok = f"{mins:02d}:{secs:02d}"
-    st.warning(f"⏳ Je mag pas weer opnieuw aanvallen over over: **{klok}**")
+    st.warning(f"⏳ Je zit in een hinderlaag! Je mag pas verder over: **{klok}**")
     st.rerun()
+    st.stop()
 
+# Veldinvoer
+vak = st.text_input("📍 Veld").upper().strip()
 
 if vak:
     if vak in st.session_state.gevonden_vakken:
