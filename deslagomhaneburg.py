@@ -65,10 +65,7 @@ vraag_data = {
     "F6": {"type": "consequentie", "tekst": "De brug is ingestort! Wacht 1 minuut.", "wacht": 60},
 }
 
-st.title("🏰 De Slag om Slot Haneburg")
-st.markdown("Voer een veld in (bijv. A1-F6):")
-vak = st.text_input("📍 Veld").upper().strip()
-
+# ⏳ Aftellende wachttimer bovenaan
 nu = time.time()
 if st.session_state.wacht_tot > nu:
     resterend = int(st.session_state.wacht_tot - nu)
@@ -78,6 +75,9 @@ if st.session_state.wacht_tot > nu:
     time.sleep(1)
     st.experimental_rerun()
 
+st.title("🏰 De Slag om Slot Haneburg")
+st.markdown("Voer een veld in (bijv. A1-F6):")
+vak = st.text_input("📍 Veld").upper().strip()
 
 if vak:
     if vak in st.session_state.gevonden_vakken:
@@ -134,8 +134,12 @@ if vak:
             wachttijd = item.get('wacht', 60)
             st.warning(f"⚠️ {item['tekst']}")
             if wachttijd > 0:
+                st.session_state.gevonden_vakken.append(vak)
                 st.session_state.wacht_tot = time.time() + wachttijd
                 st.stop()
             else:
                 st.session_state.gevonden_vakken.append(vak)
                 check_treffer_en_adres()
+
+st.markdown("---")
+st.markdown(f"### 📍 Gevonden vakken: {', '.join(st.session_state.gevonden_vakken)}")
