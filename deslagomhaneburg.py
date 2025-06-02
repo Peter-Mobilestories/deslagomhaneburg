@@ -75,7 +75,7 @@ if st.session_state.wacht_tot > nu:
     resterend = int(st.session_state.wacht_tot - nu)
     mins, secs = divmod(resterend, 60)
     klok = f"{mins:02d}:{secs:02d}"
-    st.warning(f"⏳ Je zit in een hinderlaag! Je mag pas verder over: **{klok}**")
+    st.warning(f"⏳ Je mag pas opnieuw aanvallen over: **{klok}**")
     st.rerun()
     st.stop()
 
