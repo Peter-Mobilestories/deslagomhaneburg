@@ -22,7 +22,7 @@ formatie = [
 adressen = [
     ("Esso het Anker", "A2, 6121 PE Born"),
     ("Tankpool 24", "Eijsden Knuvelkes, 6245 LZ Eijsden"),
-    ("E40 Aire de Tignee Sud", "4632 Soumagne, België"),
+    ("E40 Aire de Tignée Sud", "4632 Soumagne, België"),
     ("Rue du Parc 2", "4950 Waimes, België")
 ]
 
@@ -85,12 +85,34 @@ if vak:
         st.markdown(f"### 🧾 Opdracht voor {vak}:")
         st.write(item['tekst'])
 
+        def check_treffer_en_adres():
+            geraakt = False
+            for troep in formatie:
+                if vak in troep:
+                    geraakt = True
+                    troep_id = tuple(troep)
+                    if all(v in st.session_state.gevonden_vakken for v in troep):
+                        if troep_id not in st.session_state.gevonden_troepen:
+                            idx = len(st.session_state.gevonden_troepen)
+                            if idx < len(adressen):
+                                naam, adres = adressen[idx]
+                                st.balloons()
+                                st.success(f"💥 Troepenmacht vernietigd! Hint {idx+1}: {naam}, {adres}")
+                                st.session_state.gevonden_troepen.append(troep_id)
+                                st.session_state.gegeven_adressen.append(adres)
+                    break
+            if geraakt:
+                st.success("🎯 RAAK!")
+            else:
+                st.info("💨 MIS!")
+
         if item['type'] == 'vraag':
             antwoord = st.text_input("📝 Antwoord:")
             if antwoord:
                 if antwoord.strip().lower() == item['antwoord'].lower():
                     st.success("✅ Correct beantwoord!")
                     st.session_state.gevonden_vakken.append(vak)
+                    check_treffer_en_adres()
                 else:
                     st.error("❌ Onjuist antwoord.")
 
@@ -100,6 +122,7 @@ if vak:
                 if codewoord.strip().lower() == item['codewoord'].lower():
                     st.success("✅ Correct codewoord!")
                     st.session_state.gevonden_vakken.append(vak)
+                    check_treffer_en_adres()
                 else:
                     st.error("❌ Onjuist codewoord.")
 
@@ -111,25 +134,4 @@ if vak:
                 st.stop()
             else:
                 st.session_state.gevonden_vakken.append(vak)
-
-        geraakt = False
-        for troep in formatie:
-            if vak in troep:
-                geraakt = True
-                st.success("🎯 RAAK!")
-                troep_id = tuple(troep)
-                if all(v in st.session_state.gevonden_vakken for v in troep):
-                    if troep_id not in st.session_state.gevonden_troepen:
-                        idx = len(st.session_state.gevonden_troepen)
-                        if idx < len(adressen):
-                            naam, adres = adressen[idx]
-                            st.balloons()
-                            st.success(f"💥 Troepenmacht vernietigd! Hint {idx+1}: {naam}, {adres}")
-                            st.session_state.gevonden_troepen.append(troep_id)
-                            st.session_state.gegeven_adressen.append(adres)
-                break
-        if not geraakt:
-            st.info("💨 MIS!")
-
-st.markdown("---")
-st.markdown(f"### 📍 Gevonden vakken: {', '.join(st.session_state.gevonden_vakken)}")
+                check_treffer_en_adres()
