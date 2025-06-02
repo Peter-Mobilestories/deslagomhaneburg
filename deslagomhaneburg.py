@@ -68,15 +68,15 @@ vraag_data = {
 # ⏳ Aftellende wachttimer bovenaan
 # Zet de klok bovenaan, vóór alles
 # Zet de klok bovenaan en voorkom crash bij rerun
+st.title("🏰 De Slag om Slot Haneburg")
+vak = st.text_input("📍 Veld").upper().strip()  # <-- eerst altijd vak definiëren
+
 nu = time.time()
 if st.session_state.wacht_tot > nu:
     resterend = int(st.session_state.wacht_tot - nu)
     mins, secs = divmod(resterend, 60)
     klok = f"{mins:02d}:{secs:02d}"
-    st.title("🏰 De Slag om Slot Haneburg")
     st.warning(f"⏳ Je zit in een hinderlaag! Je mag pas verder over: **{klok}**")
-
-    # In plaats van st.experimental_rerun() direct hier:
     time.sleep(1)
     raise st.script_runner.RerunException(st.script_request_queue.RerunData(None))
 
